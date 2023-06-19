@@ -1,6 +1,7 @@
 import express, { Application, json, urlencoded } from 'express';
 import {config} from 'dotenv';
 import { IRoutes } from './interfaces/routes';
+import connectDB from './config/db';
 
 config();
 
@@ -45,6 +46,12 @@ class App {
 
     private initializeDB(): void {
         // DB connection method
+        connectDB().then(result => {
+            console.log('Successfully connected to DB');
+        })
+        .catch(err => {
+            console.log(err)
+        });
     }
 
     private initializeErrorHandling() {

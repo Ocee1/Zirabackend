@@ -1,5 +1,5 @@
 import { Schema, model, Document } from 'mongoose';
-
+import { compare } from 'bcrypt';
 export interface IUser extends Document {
     firstname: string;
     lastname: string;
@@ -7,6 +7,7 @@ export interface IUser extends Document {
     password: string;
     phoneNum: string;
     country: string;
+    validatePassword(password: string): Promise<boolean>;
 }
 
 
@@ -34,7 +35,12 @@ const schema = new Schema<IUser>(
         phoneNum: {
             type: String,
         },
-    }
-) 
+    },
+    { timestamps: true, toJSON: { virtuals: true } },
+);
+
+schema.methods.validatePassword = async function (password: string): Promise<Boolean> {
+    return await compare(password, this.password);
+};
 
 export default model<IUser>('user', schema);

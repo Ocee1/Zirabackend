@@ -1,9 +1,8 @@
 import { connect } from "mongoose";
-import { config } from 'dotenv';
-config();
+import { MONGO_URI } from '../constants'
+const MONGO_URL: string = MONGO_URI as string;
 
-const MONGO_URI: string = typeof(process.env.MONGO_URI);
 
-const connectDB = (): Promise<typeof import('mongoose')> => connect(MONGO_URI);
+const connectDB = (): Promise<typeof import('mongoose')> => connect(MONGO_URL);
 
 export default connectDB;

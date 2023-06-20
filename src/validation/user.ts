@@ -1,5 +1,5 @@
-import Joi from '@hapi/joi';
-import { ISignup, ISignin } from '../src/interfaces/validators';
+import Joi from 'joi';
+import { ISignup, ISignin } from '../interfaces/validators';
 
 class UserValidationSchema {
     constructor () {}

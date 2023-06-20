@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import UserController from "../controllers/user";
 import { IRoutes } from "../interfaces/routes";
 
@@ -13,7 +13,6 @@ class UserRouter implements IRoutes {
     private initializeRoutes() {
         this.router.post(`/user/signup`, this.userController.registerUser);
         this.router.post(`/user/signin`, this.userController.signinUser);
-
     }
 }
 

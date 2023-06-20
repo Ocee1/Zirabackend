@@ -2,11 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import UserService from "../services/user";
 import user from "../models/user";
 import bcrypt from 'bcrypt';
-import UserValidationSchema from "../../validation/user";
+import UserValidationSchema from "../validation/user";
 import { error } from "console";
 import { sign, } from 'jsonwebtoken';
 
-import Crypto from "../../utils/encrypt";
+import Crypto from "../utils/encrypt";
 
 
 class UserController {

@@ -3,11 +3,9 @@ import { SECRET_KEY } from '../constants';
 import { compare, hash } from 'bcrypt';
 import { sign, verify, Secret } from 'jsonwebtoken';
 
-// interface IConstants {
-//     SECRET_KEY: any,
-// };
 
-const SECRET: Secret = typeof(SECRET_KEY);
+
+const SECRET: Secret = SECRET_KEY as Secret;
 
 class Crypto {
     constructor() {}

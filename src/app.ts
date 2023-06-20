@@ -1,23 +1,27 @@
 import express, { Application, json, urlencoded } from 'express';
-import {config} from 'dotenv';
+import { config } from 'dotenv'
+config();
+import {PORT, SECRET_KEY } from './constants';
+
 import { IRoutes } from './interfaces/routes';
 import connectDB from './config/db';
 
-config();
+
 
 class App {
     public app: Application;
     public env: string;
-    public port: string | number;
+    public port: string | undefined;
     constructor(routes: IRoutes[]) {
         this.app = express();
         this.env = process.env.NODE_ENV || 'development';
-        this.port = process.env.port || 4000;
+        this.port = PORT;
 
         this.initializeMiddlewares();
+        this.initializeErrorHandling();
         this.initializeRoutes(routes);
         this.initializeDB();
-        this.initializeErrorHandling();
+        
     }
 
     public listen(): void {
@@ -40,13 +44,14 @@ class App {
 
     private initializeRoutes(routes: IRoutes[]): void {
         routes.forEach(route => {
-            this.app.use('zira/api/v1', route.router);
+            this.app.use('/zira/api/v1', route.router);
         });
     }
 
     private initializeDB(): void {
         // DB connection method
         connectDB().then(result => {
+            
             console.log('Successfully connected to DB');
         })
         .catch(err => {

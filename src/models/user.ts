@@ -7,6 +7,7 @@ export interface IUser extends Document {
     password: string;
     phoneNum: string;
     country: string;
+    refreshToken: string;
     validatePassword(password: string): Promise<boolean>;
 }
 
@@ -35,6 +36,10 @@ const schema = new Schema<IUser>(
         phoneNum: {
             type: String,
         },
+        refreshToken: {
+            type: String,
+            default: ' '
+        }
     },
     { timestamps: true, toJSON: { virtuals: true } },
 );

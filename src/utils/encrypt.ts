@@ -4,7 +4,6 @@ import { compare, hash } from 'bcrypt';
 import { sign, verify, Secret } from 'jsonwebtoken';
 
 
-
 const SECRET: Secret = SECRET_KEY as Secret;
 
 class Crypto {

@@ -66,10 +66,20 @@ class UserController {
                 id: isUser.id,
                 email: isUser.email,
             }
-            const token = Crypto.encrypt(payload, '1d');
 
-            isUser.save();
-            return res.status(200).json({'msg': 'Logged In Successfully'});
+            // crate access and refresh token
+            const accessToken = Crypto.encrypt(payload, '2h');
+            const refreshTok = Crypto.encrypt(payload, '2d');
+            isUser.refreshToken = refreshTok as unknown as string;
+            await isUser.save();
+
+            // save refresh token in cookie for 2days
+            res.cookie('jwt', refreshTok, {
+                httpOnly: true,
+                maxAge: 48*60*60*1000
+            })
+
+            return res.status(200).json({accessToken, 'msg': 'Logged In Successfully'});
 
         } catch (error: any) {
             return res.status(500).json({ 'msg': error.message });
